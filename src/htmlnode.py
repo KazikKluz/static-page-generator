@@ -30,7 +30,10 @@ class LeafNode(HTMLNode):
         if self.props is None:
             return f"<{self.tag}>{self.value}</{self.tag}>"
         else:
-            return f"<{self.tag}{self.props_to_html()}>{self.value}</{self.tag}>"
+            if self.tag == "img":
+                return f"<{self.tag}{self.props_to_html()}/>"
+            else:
+                return f"<{self.tag}{self.props_to_html()}>{self.value}</{self.tag}>"
 
 
 class ParentNode(HTMLNode):
