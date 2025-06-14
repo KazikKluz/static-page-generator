@@ -63,13 +63,13 @@ class TestParentNode(unittest.TestCase):
         with self.assertRaises(ValueError):
             parent_node.to_html()
 
-    def test_no_children(self):
+    def test_no_children2(self):
         child_node1 = LeafNode("span", "brother")
         parent_node = ParentNode(None, [child_node1])
         with self.assertRaises(ValueError):
             parent_node.to_html()
 
-    def test_to_html_with_grand_grandchildren(self):
+    def test_to_html_with_grand_grandchildren2(self):
         grandgrandchild_node = LeafNode("p", "grandgrandchild")
         grandchild_node = ParentNode("b", [grandgrandchild_node])
         child_node = ParentNode("span", [grandchild_node])
