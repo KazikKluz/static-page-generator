@@ -1,6 +1,6 @@
 import unittest
 
-from split_delimiter import split_nodes_delimiter, split_nodes_image
+from split_delimiter import split_nodes_delimiter, split_nodes_image, split_nodes_link
 from textnode import TextNode, TextType
 
 
@@ -128,6 +128,68 @@ class TestSplitDelimiter(unittest.TestCase):
                 TextNode(
                     "second image", TextType.IMAGE, "https://i.imgur.com/3elNhQu.png"
                 ),
+            ],
+            new_nodes,
+        )
+
+    def test_split_links_even(self):
+        node = TextNode(
+            "This is text with an [link1](https://firsturl.png) and another [link2](https://secondurl.png) link.",
+            TextType.TEXT,
+        )
+        new_nodes = split_nodes_link(node)
+        self.assertListEqual(
+            [
+                TextNode("This is text with an ", TextType.TEXT),
+                TextNode("link1", TextType.LINK, "https://firsturl.png"),
+                TextNode(" and another ", TextType.TEXT),
+                TextNode("link2", TextType.LINK, "https://secondurl.png"),
+                TextNode(" link.", TextType.TEXT),
+            ],
+            new_nodes,
+        )
+
+    def test_split_links_uneven(self):
+        node = TextNode(
+            "This is text with an [link1](https://firsturl.png) and another [link2](https://secondurl.png)",
+            TextType.TEXT,
+        )
+        new_nodes = split_nodes_link(node)
+        self.assertListEqual(
+            [
+                TextNode("This is text with an ", TextType.TEXT),
+                TextNode("link1", TextType.LINK, "https://firsturl.png"),
+                TextNode(" and another ", TextType.TEXT),
+                TextNode("link2", TextType.LINK, "https://secondurl.png"),
+            ],
+            new_nodes,
+        )
+
+    def test_split_links_no_front_string(self):
+        node = TextNode(
+            "[link1](https://firsturl.png) and another [link2](https://secondurl.png)",
+            TextType.TEXT,
+        )
+        new_nodes = split_nodes_link(node)
+        self.assertListEqual(
+            [
+                TextNode("link1", TextType.LINK, "https://firsturl.png"),
+                TextNode(" and another ", TextType.TEXT),
+                TextNode("link2", TextType.LINK, "https://secondurl.png"),
+            ],
+            new_nodes,
+        )
+
+    def test_split_links_just_links(self):
+        node = TextNode(
+            "[link1](https://firsturl.png)[link2](https://secondurl.png)",
+            TextType.TEXT,
+        )
+        new_nodes = split_nodes_link(node)
+        self.assertListEqual(
+            [
+                TextNode("link1", TextType.LINK, "https://firsturl.png"),
+                TextNode("link2", TextType.LINK, "https://secondurl.png"),
             ],
             new_nodes,
         )
