@@ -25,7 +25,7 @@ This is the same paragraph on a new line
         )
 
     def test_no_extra_lines(self):
-        """ Testing case where extra lines occurs """
+        """Testing case where extra lines occurs"""
         md = """
 This is **bolded** paragraph
 
@@ -49,7 +49,7 @@ This is the same paragraph on a new line
             ],
         )
 
-    def one_block(self):
+    def test_one_block(self):
         md = """
 This is **bolded** paragraph
 This is another paragraph with _italic_ text and `code` here
@@ -61,7 +61,7 @@ This is the same paragraph on a new line
         self.assertEqual(
             blocks,
             [
-                "This is **bolded** paragraph"
+                "This is **bolded** paragraph\n"
                 "This is another paragraph with _italic_ text and `code` here\nThis is the same paragraph on a new line"
                 "- This is a list\n- with items"
             ],
