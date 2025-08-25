@@ -25,7 +25,7 @@ yaml """
          stage('Checkout') {
             steps {
                 git(
-                    url: 'https://github.com/KazikKluz/static-page-generator.git'
+                    url: 'https://github.com/KazikKluz/static-page-generator.git',
                     branch: 'main',
                     credentialsId: 'github-credentials'
                 )
