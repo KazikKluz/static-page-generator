@@ -25,7 +25,7 @@ yaml """
          stage('Checkout') {
             steps {
                 git(
-                    url: 'https://github.com/KazikKluz/static-page-generator'
+                    url: 'https://github.com/KazikKluz/static-page-generator.git'
                     branch: 'main',
                     credentialsId: 'github-credentials'
                 )
@@ -57,7 +57,7 @@ yaml """
 
 			    sonar-scanner \
  				-Dsonar.organization=kazikkluz \
-  				-Dsonar.projectKey=KazikKluz_rsschool-devops \
+  				-Dsonar.projectKey=KazikKluz_static-page-generator \
   				-Dsonar.sources=./flask_app \
   				-Dsonar.host.url=https://sonarcloud.io
                         '''
