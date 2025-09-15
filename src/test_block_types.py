@@ -11,13 +11,31 @@ class TestingBlockTypes(unittest.TestCase):
     """Class for testing block types"""
 
     def test_heading_1(self):
-        """ Simple HTML Header 1 testing"""
+        """Simple HTML Header 1 testing"""
         block = "# This is a heading 1"
         self.assertEqual(block_to_block_type(block), BlockType.H1)
+
+    def test_h1(self):
+        self.assertNotEqual("## Hello ", BlockType.H1)
+
+    def test_h2(self):
+        self.assertEqual("## Hello ", BlockType.H2)
+
+    def test_h3(self):
+        self.assertEqual("### Hello ", BlockType.H3)
+
+    def test_h4(self):
+        self.assertEqual("#### Hello ", BlockType.H4)
+
+    def test_h5(self):
+        self.assertEqual("##### Hello ", BlockType.H5)
 
     def test_heading_6(self):
         block = "###### This is a heading 6"
         self.assertEqual(block_to_block_type(block), BlockType.H6)
+
+    def test_h6(self):
+        self.assertNotEqual("## Hello ", BlockType.H6)
 
     def test_code(self):
         block = "``` This is some code ```"
