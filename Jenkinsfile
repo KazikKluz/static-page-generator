@@ -32,8 +32,17 @@ yaml """
             }
         }
 
+        stage('Install Dependencies'){
+            steps {
+                container('python') {
+                    dir('.') {
+                        sh 'pip install -r requirements.txt'
+                    }
+                }
+            }
+        }
 
-        stage('Test App') {
+        stage('Test & Coverage') {
             steps {
                 container('python') {
 		            dir('.') {
@@ -60,15 +69,25 @@ yaml """
   				-Dsonar.projectKey=KazikKluz_static-page-generator \
   				-Dsonar.sources=./src \
   				-Dsonar.host.url=https://sonarcloud.io \
-				-Dsonar.qualityGate.wait=true
                         '''
                     }
+                }
+            }
+        }
+        stage('Quality Gate') {
+            steps {
+                timeout(time: 1, unit: 'HOURS'){
+                    waitForQualityGate abortPipeline: true
                 }
             }
         }
     }
 
     post {
+        always {
+            archiveArtifacts artifacts: 'coverage.xml', allowEmptyArchive: true
+            cobertura coberturaReport
+        }
         success {
           slackSend  color: "good", message: "The pipeline has succeeded. ${currentBuild.fullDisplayName}"
         }

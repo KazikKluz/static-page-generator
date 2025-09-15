@@ -1,7 +1,8 @@
-''' This module is testing HTML Nodes'''
+"""This module is testing HTML Nodes"""
+
 import unittest
 
-from htmlnode import HTMLNode, LeafNode, ParentNode
+from src.htmlnode import HTMLNode, LeafNode, ParentNode
 
 test_prop1 = {
     "href": "https://www.google.com",
@@ -16,10 +17,10 @@ test_prop2 = {
 
 
 class TestHTMLNode(unittest.TestCase):
-    ''' Simple Class for Testing TestHTMLNode '''
+    """Simple Class for Testing TestHTMLNode"""
 
     def test_prop_eq(self):
-        ''' Checks if props are equal '''
+        """Checks if props are equal"""
         props_html = ' href="https://www.google.com" target="_blank"'
         node = HTMLNode(tag="H1", props=test_prop1)
         self.assertEqual(props_html, node.props_to_html())
@@ -45,8 +46,7 @@ class TestParentNode(unittest.TestCase):
     def test_to_html_with_children(self):
         child_node = LeafNode("span", "child")
         parent_node = ParentNode("div", [child_node])
-        self.assertEqual(parent_node.to_html(),
-                         "<div><span>child</span></div>")
+        self.assertEqual(parent_node.to_html(), "<div><span>child</span></div>")
 
     def test_to_html_with_grand_grandchildren(self):
         grandchild_node = LeafNode("b", "grandchild")

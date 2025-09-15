@@ -1,6 +1,6 @@
 import unittest
 
-from textnode import TextNode, TextType, text_node_to_html_node
+from src.textnode import TextNode, TextType, text_node_to_html_node
 
 
 class TestTextNode(unittest.TestCase):
@@ -49,15 +49,18 @@ class TestTextNode(unittest.TestCase):
         self.assertEqual(html_node.value, "This is code")
 
     def test_link(self):
-        node = TextNode("This is link", TextType.LINK, {"href": "www.text.com"})
+        node = TextNode("This is link", TextType.LINK,
+                        {"href": "www.text.com"})
         html_node = text_node_to_html_node(node)
         self.assertEqual(html_node.tag, "a")
         self.assertEqual(html_node.value, "This is link")
-        self.assertEqual(html_node.to_html(), '<a href="www.text.com">This is link</a>')
+        self.assertEqual(html_node.to_html(),
+                         '<a href="www.text.com">This is link</a>')
 
     def test_image(self):
         node = TextNode(
-            None, TextType.IMAGE, {"src": "https://text.com", "alt": "Alt text"}
+            None, TextType.IMAGE, {
+                "src": "https://text.com", "alt": "Alt text"}
         )
         html_node = text_node_to_html_node(node)
         self.assertEqual(html_node.tag, "img")

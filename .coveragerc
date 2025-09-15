@@ -1,0 +1,9 @@
+[run]
+source = src/
+branch = True
+omit =
+    */tests/*
+    */__init__.py
+
+[xml]
+output = coverage.xml

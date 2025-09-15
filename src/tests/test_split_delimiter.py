@@ -1,7 +1,7 @@
 import unittest
 
-from split_delimiter import split_nodes_delimiter, split_nodes_image, split_nodes_link
-from textnode import TextNode, TextType
+from src.split_delimiter import split_nodes_delimiter, split_nodes_image, split_nodes_link
+from src.textnode import TextNode, TextType
 
 
 class TestSplitDelimiter(unittest.TestCase):
@@ -71,7 +71,8 @@ class TestSplitDelimiter(unittest.TestCase):
         self.assertListEqual(
             [
                 TextNode("This is text with an ", TextType.TEXT),
-                TextNode("image", TextType.IMAGE, "https://i.imgur.com/zjjcJKZ.png"),
+                TextNode("image", TextType.IMAGE,
+                         "https://i.imgur.com/zjjcJKZ.png"),
                 TextNode(" and another ", TextType.TEXT),
                 TextNode(
                     "second image", TextType.IMAGE, "https://i.imgur.com/3elNhQu.png"
@@ -90,7 +91,8 @@ class TestSplitDelimiter(unittest.TestCase):
         self.assertListEqual(
             [
                 TextNode("This is text with an ", TextType.TEXT),
-                TextNode("image", TextType.IMAGE, "https://i.imgur.com/zjjcJKZ.png"),
+                TextNode("image", TextType.IMAGE,
+                         "https://i.imgur.com/zjjcJKZ.png"),
                 TextNode(" and another ", TextType.TEXT),
                 TextNode(
                     "second image", TextType.IMAGE, "https://i.imgur.com/3elNhQu.png"
@@ -107,7 +109,8 @@ class TestSplitDelimiter(unittest.TestCase):
         new_nodes = split_nodes_image(node)
         self.assertListEqual(
             [
-                TextNode("image", TextType.IMAGE, "https://i.imgur.com/zjjcJKZ.png"),
+                TextNode("image", TextType.IMAGE,
+                         "https://i.imgur.com/zjjcJKZ.png"),
                 TextNode(" and another ", TextType.TEXT),
                 TextNode(
                     "second image", TextType.IMAGE, "https://i.imgur.com/3elNhQu.png"
@@ -124,7 +127,8 @@ class TestSplitDelimiter(unittest.TestCase):
         new_nodes = split_nodes_image(node)
         self.assertListEqual(
             [
-                TextNode("image", TextType.IMAGE, "https://i.imgur.com/zjjcJKZ.png"),
+                TextNode("image", TextType.IMAGE,
+                         "https://i.imgur.com/zjjcJKZ.png"),
                 TextNode(
                     "second image", TextType.IMAGE, "https://i.imgur.com/3elNhQu.png"
                 ),

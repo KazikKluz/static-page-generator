@@ -4,7 +4,7 @@ different types of HTML blocks
 
 import unittest
 
-from block_types import BlockType, block_to_block_type
+from src.block_types import BlockType, block_to_block_type
 
 
 class TestingBlockTypes(unittest.TestCase):
