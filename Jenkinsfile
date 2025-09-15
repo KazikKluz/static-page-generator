@@ -58,7 +58,7 @@ yaml """
 			    sonar-scanner \
  				-Dsonar.organization=kazikkluz \
   				-Dsonar.projectKey=KazikKluz_static-page-generator \
-  				-Dsonar.sources=./flask_app \
+  				-Dsonar.sources=./src \
   				-Dsonar.host.url=https://sonarcloud.io
                         '''
                     }
