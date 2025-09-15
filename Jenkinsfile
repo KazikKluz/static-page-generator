@@ -59,7 +59,7 @@ yaml """
  				-Dsonar.organization=kazikkluz \
   				-Dsonar.projectKey=KazikKluz_static-page-generator \
   				-Dsonar.sources=./src \
-  				-Dsonar.host.url=https://sonarcloud.io
+  				-Dsonar.host.url=https://sonarcloud.io \
 				-Dsonar.qualityGate.wait=true
                         '''
                     }
