@@ -65,6 +65,7 @@ yaml """
                 }
             }
         }
+    }
 
     post {
         success {
@@ -75,5 +76,4 @@ yaml """
           slackSend  color: "danger", message: "The pipeline has failed. ${currentBuild.fullDisplayName}"
         }
     }
-}
 }
