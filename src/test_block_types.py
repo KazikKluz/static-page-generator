@@ -11,6 +11,7 @@ class TestingBlockTypes(unittest.TestCase):
     """Class for testing block types"""
 
     def test_heading_1(self):
+        """ Simple HTML Header 1 testing"""
         block = "# This is a heading 1"
         self.assertEqual(block_to_block_type(block), BlockType.H1)
 
