@@ -71,18 +71,25 @@ yaml """
   				-Dsonar.host.url=https://sonarcloud.io \\
                 -Dsonar.token=${SONAR_TOKEN} \\
                 -Dsonar.python.coverage.reportPaths=coverage.xml \\
-                -Dsonar.qualityGate.wait=true
                         '''
                     }
                 }
             }
         }
+
+        stage('Quality Gate') {
+            steps {
+                timeout(time: 1, unit: 'HOURS'){
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
+
     }
 
     post {
         always {
             archiveArtifacts artifacts: 'coverage.xml', allowEmptyArchive: true
-            publishCoverage adapters: [coberturaAdapter('coverage.xml')]
         }
         success {
           slackSend  color: "good", message: "The pipeline has succeeded. ${currentBuild.fullDisplayName}"
