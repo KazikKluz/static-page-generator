@@ -16,19 +16,19 @@ class TestingBlockTypes(unittest.TestCase):
         self.assertEqual(block_to_block_type(block), BlockType.H1)
 
     def test_h1(self):
-        self.assertNotEqual("## Hello ", BlockType.H1)
+        self.assertNotEqual(block_to_block_type("## Hello "), BlockType.H1)
 
     def test_h2(self):
-        self.assertEqual("## Hello ", BlockType.H2)
+        self.assertEqual(block_to_block_type("## Hello "), BlockType.H2)
 
     def test_h3(self):
-        self.assertEqual("### Hello ", BlockType.H3)
+        self.assertEqual(block_to_block_type("### Hello "), BlockType.H3)
 
     def test_h4(self):
-        self.assertEqual("#### Hello ", BlockType.H4)
+        self.assertEqual(block_to_block_type("#### Hello "), BlockType.H4)
 
     def test_h5(self):
-        self.assertEqual("##### Hello ", BlockType.H5)
+        self.assertEqual(block_to_block_type("##### Hello "), BlockType.H5)
 
     def test_heading_6(self):
         block = "###### This is a heading 6"
