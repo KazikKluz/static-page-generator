@@ -86,7 +86,7 @@ yaml """
     post {
         always {
             archiveArtifacts artifacts: 'coverage.xml', allowEmptyArchive: true
-            cobertura coberturaReport
+            publishCoverage adapters: [coberturaAdapter('coverage.xml')]
         }
         success {
           slackSend  color: "good", message: "The pipeline has succeeded. ${currentBuild.fullDisplayName}"
