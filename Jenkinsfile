@@ -64,20 +64,16 @@ yaml """
 		            export PATH=$SONAR_SCANNER_HOME/bin:$PATH
 			    export SONAR_SCANNER_OPTS="-server"
 
-			    sonar-scanner \
- 				-Dsonar.organization=kazikkluz \
-  				-Dsonar.projectKey=KazikKluz_static-page-generator \
-  				-Dsonar.sources=./src \
-  				-Dsonar.host.url=https://sonarcloud.io \
+			    sonar-scanner \\
+ 				-Dsonar.organization=kazikkluz \\
+  				-Dsonar.projectKey=KazikKluz_static-page-generator \\
+  				-Dsonar.sources=./src \\
+  				-Dsonar.host.url=https://sonarcloud.io \\
+                -Dsonar.token=${SONAR_TOKEN} \\
+                -Dsonar.python.coverage.reportPaths=coverage.xml \\
+                -Dsonar.qualityGate.wait=true
                         '''
                     }
-                }
-            }
-        }
-        stage('Quality Gate') {
-            steps {
-                timeout(time: 1, unit: 'HOURS'){
-                    waitForQualityGate abortPipeline: true
                 }
             }
         }
