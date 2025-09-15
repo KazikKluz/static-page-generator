@@ -13,7 +13,11 @@ def text_to_nodes(text):
 
 
 def delimiters(nodes):
-    args = [("**", TextType.BOLD), ("_", TextType.ITALIC), ("`", TextType.CODE)]
+    args = [
+        ("**", TextType.BOLD),
+        ("_", TextType.ITALIC),
+        ("`", TextType.CODE),
+    ]
 
     for arg in args:
         temp = []

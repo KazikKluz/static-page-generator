@@ -62,7 +62,7 @@ This is the same paragraph on a new line
             blocks,
             [
                 "This is **bolded** paragraph\n"
-                "This is another paragraph with _italic_ text and `code` here\nThis is the same paragraph on a new line"
+                "This is another paragraph with _italic_ text and `code` here\nThis is the same paragraph on a new line\n"
                 "- This is a list\n- with items"
             ],
         )
