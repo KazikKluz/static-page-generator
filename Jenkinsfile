@@ -22,7 +22,7 @@ yaml """
     }
 
     tools {
-        sonarScanner: 'SonarCloud'
+        sonarScanner 'SonarCloud'
     }
 
     stages {
