@@ -21,10 +21,6 @@ yaml """
         }
     }
 
-    tools {
-       hudson.plugins.sonar.SonarRunnerInstallation  'SonarCloud'
-    }
-
     stages {
          stage('Checkout') {
             steps {
@@ -61,8 +57,10 @@ yaml """
                 container('python') {
                     withSonarQubeEnv('SonarCloud'){
                         withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
-                        sh '''
-			    sonar-scanner \\
+                            script {
+                                def scannerHome = tool name: 'SonarScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+                                sh '''
+			                       ${scannerHome}/bin/sonar-scanner \\
  				    -Dsonar.organization=kazikkluz \\
   				    -Dsonar.projectKey=KazikKluz_static-page-generator \\
   				    -Dsonar.sources=./src \\
@@ -70,6 +68,8 @@ yaml """
                     -Dsonar.token=${SONAR_TOKEN} \\
                     -Dsonar.python.coverage.reportPaths=coverage.xml \\
                         '''
+                            }
+                        
                     }
                     }
                     
