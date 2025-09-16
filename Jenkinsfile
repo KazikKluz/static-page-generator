@@ -55,23 +55,25 @@ yaml """
         stage('SonarCloud check') {
             steps {
                 container('python') {
+                    withSonarQubeEnv('SonarCloud'){
                         withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
-                    sh'''
-                    export SONAR_SCANNER_VERSION=7.0.2.4839
-			        export SONAR_SCANNER_HOME=$HOME/.sonar/sonar-scanner-$SONAR_SCANNER_VERSION-linux-x64
-			        curl --create-dirs -sSLo $HOME/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux-x64.zip
-			        unzip -o $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/
-		            export PATH=$SONAR_SCANNER_HOME/bin:$PATH
+                            sh'''
+                                export SONAR_SCANNER_VERSION=7.0.2.4839
+			                    export SONAR_SCANNER_HOME=$HOME/.sonar/sonar-scanner-$SONAR_SCANNER_VERSION-linux-x64
+			                    curl --create-dirs -sSLo $HOME/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux-x64.zip
+			                    unzip -o $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/
+		                        export PATH=$SONAR_SCANNER_HOME/bin:$PATH
 
-			         sonar-scanner \\
- 				    -Dsonar.organization=kazikkluz \\
-  				    -Dsonar.projectKey=KazikKluz_static-page-generator \\
-  				    -Dsonar.sources=./src \\
-  				    -Dsonar.host.url=https://sonarcloud.io \\
-                    -Dsonar.token=${SONAR_TOKEN} \\
-                    -Dsonar.python.coverage.reportPaths=coverage.xml \\
-                        '''
+			                    sonar-scanner \\
+ 				                -Dsonar.organization=kazikkluz \\
+  				                -Dsonar.projectKey=KazikKluz_static-page-generator \\
+  				                -Dsonar.sources=./src \\
+  				                -Dsonar.host.url=https://sonarcloud.io \\
+                                -Dsonar.token=${SONAR_TOKEN} \\
+                                -Dsonar.python.coverage.reportPaths=coverage.xml \\
+                            '''
                         }
+                    }
                 }
             }
         }
