@@ -57,10 +57,15 @@ yaml """
                 container('python') {
                     withSonarQubeEnv('SonarCloud'){
                         withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
-                            script {
-                                def scannerHome = tool name: 'SonarCloud', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
-                                sh '''
-			                       ${scannerHome}/bin/sonar-scanner \\
+                    sh'''
+                    export SONAR_SCANNER_VERSION=7.0.2.4839
+			        export SONAR_SCANNER_HOME=$HOME/.sonar/sonar-scanner-$SONAR_SCANNER_VERSION-linux-x64
+			        curl --create-dirs -sSLo $HOME/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux-x64.zip
+			        unzip -o $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/
+		            export PATH=$SONAR_SCANNER_HOME/bin:$PATH
+			        export SONAR_SCANNER_OPTS="-server"
+
+			         sonar-scanner \\
  				    -Dsonar.organization=kazikkluz \\
   				    -Dsonar.projectKey=KazikKluz_static-page-generator \\
   				    -Dsonar.sources=./src \\
@@ -68,7 +73,6 @@ yaml """
                     -Dsonar.token=${SONAR_TOKEN} \\
                     -Dsonar.python.coverage.reportPaths=coverage.xml \\
                         '''
-                            }
                         
                     }
                     }
