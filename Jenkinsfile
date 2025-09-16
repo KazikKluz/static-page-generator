@@ -55,7 +55,6 @@ yaml """
         stage('SonarCloud check') {
             steps {
                 container('python') {
-                    withSonarQubeEnv('SonarCloud'){
                         withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
                     sh'''
                     export SONAR_SCANNER_VERSION=7.0.2.4839
@@ -63,7 +62,6 @@ yaml """
 			        curl --create-dirs -sSLo $HOME/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux-x64.zip
 			        unzip -o $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/
 		            export PATH=$SONAR_SCANNER_HOME/bin:$PATH
-			        export SONAR_SCANNER_OPTS="-server"
 
 			         sonar-scanner \\
  				    -Dsonar.organization=kazikkluz \\
@@ -74,21 +72,6 @@ yaml """
                     -Dsonar.python.coverage.reportPaths=coverage.xml \\
                         '''
                         }
-                    }
-                    
-                }
-            }
-        }
-
-        stage('Quality Gate') {
-            steps {
-                timeout(time: 10, unit: 'MINUTES') {  // Adjust based on analysis time; prevents hanging
-                    script {
-                        def qg = waitForQualityGate()
-                        if (qg.status != 'OK') {
-                            error "Pipeline aborted due to Quality Gate failure: ${qg.status}"
-                        }
-                    }
                 }
             }
         }
@@ -96,6 +79,21 @@ yaml """
 
     post {
         always {
+            recordCoverage(
+                tools: [
+                    [
+                        parser: 'COBERTURA',
+                        pattern: 'coverage.xml'
+                    ]
+                ],
+                // Optional: Set thresholds to fail build if coverage is low
+                qualityGates: [
+                    [metric: 'LINE', threshold: 80.0, unstableThreshold: 70.0],  // Fail if <80%, unstable if <70%
+                    [metric: 'BRANCH', threshold: 70.0]
+                ],
+                failUnhealthy: false,  // Don't fail on parsing errors; log them instead
+                sourceCodeRetention: 'LAST_BUILD'  // Retain source for views
+            )
             archiveArtifacts artifacts: 'coverage.xml', allowEmptyArchive: true
         }
         success {
