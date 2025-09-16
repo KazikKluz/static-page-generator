@@ -72,6 +72,7 @@ yaml """
   				    -Dsonar.host.url=https://sonarcloud.io \\
                     -Dsonar.token=${SONAR_TOKEN} \\
                     -Dsonar.python.coverage.reportPaths=coverage.xml \\
+                    -Dsonar.qualityGate.wait=true
                         '''
                         
                     }
@@ -80,15 +81,6 @@ yaml """
                 }
             }
         }
-
-        stage('Quality Gate') {
-            steps {
-                timeout(time: 1, unit: 'HOURS'){
-                    waitForQualityGate abortPipeline: true
-                }
-            }
-        }
-
     }
 
     post {
