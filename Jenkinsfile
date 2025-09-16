@@ -77,6 +77,13 @@ yaml """
                         
                     }
                     }
+                    // Wait for Quality Gate and fail pipeline if not OK
+                timeout(time: 10, unit: 'MINUTES') {  // Adjust timeout based on your analysis size/complexity
+                    def qg = waitForQualityGate()
+                    if (qg.status != 'OK') {
+                    error "Pipeline aborted due to Quality Gate failure: ${qg.status}"
+                }
+            } 
                     
                 }
             }
@@ -85,6 +92,7 @@ yaml """
 
     post {
         always {
+            recordQualityGate()
             archiveArtifacts artifacts: 'coverage.xml', allowEmptyArchive: true
         }
         success {
