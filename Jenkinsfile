@@ -68,7 +68,7 @@ yaml """
  				                -Dsonar.organization=kazikkluz \\
   				                -Dsonar.projectKey=KazikKluz_static-page-generator \\
   				                -Dsonar.sources=./src \\
-                                -Dsonar.tests=./src/tests
+                                -Dsonar.tests=./tests \\
   				                -Dsonar.host.url=https://sonarcloud.io \\
                                 -Dsonar.token=${SONAR_TOKEN} \\
                                 -Dsonar.python.coverage.reportPaths=coverage.xml \\
