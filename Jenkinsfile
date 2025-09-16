@@ -86,13 +86,14 @@ yaml """
                         pattern: 'coverage.xml'
                     ]
                 ],
-                // Optional: Set thresholds to fail build if coverage is low
+                id: 'python-coverage',  // Unique ID for the report
+                name: 'Python Coverage',  // Display name in Jenkins UI
                 qualityGates: [
-                    [metric: 'LINE', threshold: 80.0, unstableThreshold: 70.0],  // Fail if <80%, unstable if <70%
+                    [metric: 'LINE', threshold: 80.0, unstableThreshold: 70.0],  // Warn if <80%, unstable if <70%
                     [metric: 'BRANCH', threshold: 70.0]
                 ],
-                failUnhealthy: false,  // Don't fail on parsing errors; log them instead
-                sourceCodeRetention: 'LAST_BUILD'  // Retain source for views
+                failOnError: false,  // Don’t fail on parsing errors (log them instead)
+                sourceCodeRetention: 'LAST_BUILD'  // Retain source for coverage visualization
             )
             archiveArtifacts artifacts: 'coverage.xml', allowEmptyArchive: true
         }
