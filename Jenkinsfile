@@ -72,18 +72,11 @@ yaml """
   				    -Dsonar.host.url=https://sonarcloud.io \\
                     -Dsonar.token=${SONAR_TOKEN} \\
                     -Dsonar.python.coverage.reportPaths=coverage.xml \\
-                    -Dsonar.qualityGate.wait=true
                         '''
-                        
+                    waitForQualityGate abortPipeline: true   
                     }
                     }
-                    // Wait for Quality Gate and fail pipeline if not OK
-                timeout(time: 10, unit: 'MINUTES') {  // Adjust timeout based on your analysis size/complexity
-                    def qg = waitForQualityGate()
-                    if (qg.status != 'OK') {
-                    error "Pipeline aborted due to Quality Gate failure: ${qg.status}"
-                }
-            } 
+          
                     
                 }
             }
