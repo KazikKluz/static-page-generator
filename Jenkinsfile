@@ -58,7 +58,7 @@ yaml """
                     withSonarQubeEnv('SonarCloud'){
                         withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
                             script {
-                                def scannerHome = tool name: 'SonarScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+                                def scannerHome = tool name: 'SonarCloud', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
                                 sh '''
 			                       ${scannerHome}/bin/sonar-scanner \\
  				    -Dsonar.organization=kazikkluz \\
