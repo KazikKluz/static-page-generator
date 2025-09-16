@@ -22,7 +22,7 @@ yaml """
     }
 
     tools {
-        sonarScanner 'SonarCloud'
+       hudson.plugins.sonar.SonarRunnerInstallation  'SonarCloud'
     }
 
     stages {
