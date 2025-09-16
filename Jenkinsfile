@@ -21,6 +21,10 @@ yaml """
         }
     }
 
+    tools {
+        sonarScanner: 'SonarCloud'
+    }
+
     stages {
          stage('Checkout') {
             steps {
