@@ -73,11 +73,22 @@ yaml """
                     -Dsonar.token=${SONAR_TOKEN} \\
                     -Dsonar.python.coverage.reportPaths=coverage.xml \\
                         '''
-                    waitForQualityGate abortPipeline: true   
+                        }
                     }
-                    }
-          
                     
+                }
+            }
+        }
+
+        stage('Quality Gate') {
+            steps {
+                timeout(time: 10, unit: 'MINUTES') {  // Adjust based on analysis time; prevents hanging
+                    script {
+                        def qg = waitForQualityGate()
+                        if (qg.status != 'OK') {
+                            error "Pipeline aborted due to Quality Gate failure: ${qg.status}"
+                        }
+                    }
                 }
             }
         }
@@ -85,7 +96,6 @@ yaml """
 
     post {
         always {
-            recordQualityGate()
             archiveArtifacts artifacts: 'coverage.xml', allowEmptyArchive: true
         }
         success {
