@@ -37,8 +37,6 @@ yaml """
                 container('python') {
                     dir('.') {
                         sh '''
-                           python -m venv /tmp/venv
-                           . /tmp/venv/bin/activate
                            pip install --upgrade pip
                            pip install --cache-dir /tmp/pip-cache -r requirements.txt
                         '''
@@ -51,10 +49,7 @@ yaml """
             steps {
                 container('python') {
 		            dir('.') {
-                        sh '''
-                        source /tmp/venv/bin/activate
-                        ./test.sh
-                        '''
+                        sh './test.sh'
 	                }
                 }
             }
