@@ -26,6 +26,14 @@ def markdown_to_html_node(doc):
             outer = ParentNode("pre", [inner])
 
             nodes.append(outer)
+
+        elif block_type.value == "ol" or block_type.value == "ul":
+            children = process_list(block)
+            print(f"children: {children}")
+
+            node = ParentNode(block_type.value, children)
+
+            nodes.append(node)
         else:
             children = text_to_children(block)
 
@@ -38,7 +46,27 @@ def markdown_to_html_node(doc):
     return parent
 
 
+def process_list(text):
+    """It takes a Markdown list 
+    and convert it into html list elements"""
+
+    splited_text = text.split("\n")
+    children = []
+
+    for item in splited_text:
+        # before passing it to function get rid of leading bullet point digit or dot
+        new_item = text_to_children(item.strip().split(" ", 1)[1])
+        leaf = ParentNode("li", new_item)
+        children.append(leaf)
+
+    return children
+
+
 def process_code_block(text):
+    """It takes markdown text
+        and remove all leading and trailing
+        indentations and new lines
+    """
     stripped_block = text.strip("`").strip("\n")
     lines = stripped_block.splitlines()
     non_empty_lines = [line for line in lines if line.strip()]

@@ -1,3 +1,7 @@
+""" This module contains functions for
+translating text into inline html nodes
+"""
+
 from src.split_delimiter import split_nodes_delimiter, split_nodes_image, split_nodes_link
 from src.textnode import TextNode, TextType
 

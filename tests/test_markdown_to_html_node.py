@@ -35,7 +35,25 @@ class TestMarkdownToHTMLNode(unittest.TestCase):
         html = node.to_html()
         self.assertEqual(
             html,
-            "<div><pre><code>This is text that _should_ remain\nthe **same** even with inline stuff\n</code></pre></div>",
+            ("<div><pre><code>This is text that _should_ remain\n"
+             "the **same** even with inline stuff\n</code></pre></div>"),
+        )
+
+    def test_ordered_list(self):
+        """Will test case of ordered list"""
+
+        md = """
+        1. This is ordered list first element
+        2. This is ordered list second element
+        3. This is ordered list third element
+        """
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            ("<div><ol><li>This is ordered list first element</li>"
+             "<li>This is ordered list second element</li>"
+             "<li>This is ordered list third element</li></ol></div>")
         )
 
     # TODO create tests for other block types

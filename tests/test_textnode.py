@@ -1,10 +1,15 @@
+'''Testing module for TextNode'''
+
 import unittest
 
 from src.textnode import TextNode, TextType, text_node_to_html_node
 
 
 class TestTextNode(unittest.TestCase):
+    """Group of tests for TextNode"""
+
     def test_eq(self):
+        """Checks equality of identical bold text"""
         node = TextNode("This is a text node", TextType.BOLD)
         node2 = TextNode("This is a text node", TextType.BOLD)
         self.assertEqual(node, node2)
@@ -27,7 +32,7 @@ class TestTextNode(unittest.TestCase):
     def test_text(self):
         node = TextNode("This is a text node", TextType.TEXT)
         html_node = text_node_to_html_node(node)
-        self.assertEqual(html_node.tag, None)
+        self.assertIsNone(html_node.tag, None)
         self.assertEqual(html_node.value, "This is a text node")
 
     def test_bold(self):

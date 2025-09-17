@@ -36,7 +36,12 @@ yaml """
             steps {
                 container('python') {
                     dir('.') {
-                        sh 'pip install -r requirements.txt'
+                        sh '''
+                           python -m venv /tmp/venv
+                           . /tmp/venv/bin/activate
+                           pip install --upgrade pip
+                           pip install --cache-dir /tmp/pip-cache - requirements.txt
+                        '''
                     }
                 }
             }
