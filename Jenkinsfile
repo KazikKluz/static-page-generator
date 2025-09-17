@@ -40,7 +40,7 @@ yaml """
                            python -m venv /tmp/venv
                            . /tmp/venv/bin/activate
                            pip install --upgrade pip
-                           pip install --cache-dir /tmp/pip-cache - requirements.txt
+                           pip install --cache-dir /tmp/pip-cache -r requirements.txt
                         '''
                     }
                 }
