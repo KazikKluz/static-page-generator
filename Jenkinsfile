@@ -51,7 +51,10 @@ yaml """
             steps {
                 container('python') {
 		            dir('.') {
-                        sh './test.sh'
+                        sh '''
+                        source /tmp/venv/bin/activate
+                        ./test.sh
+                        '''
 	                }
                 }
             }
