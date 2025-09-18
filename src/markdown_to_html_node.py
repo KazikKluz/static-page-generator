@@ -20,6 +20,11 @@ def markdown_to_html_node(doc):
         block_type = block_to_block_type(block)
 
         match block_type.value:
+            case "h":
+                size, children = process_header(block)
+                node = ParentNode(block_type.value + str(size), children)
+                nodes.append(node)
+
             case "code":
                 clean_content = process_code_block(block)
                 leaf = LeafNode(None, clean_content)
@@ -48,6 +53,17 @@ def markdown_to_html_node(doc):
     parent = ParentNode("div", nodes)
 
     return parent
+
+
+def process_header(text):
+    """It takes a Markdown header and converts it
+    into an HTML Header text plus its size"""
+    split_text = text.split(" ", 1)
+    lead = split_text[0].replace("\n", "")
+    extracted_text = split_text[1].replace("\n", "")
+
+    print(f"this is extracted text: {extracted_text}")
+    return len(lead), text_to_children(extracted_text)
 
 
 def process_blockquote(text):

@@ -94,4 +94,29 @@ class TestMarkdownToHTMLNode(unittest.TestCase):
              )
         )
 
-    # TODO create tests for other block types
+    def test_headings_2(self):
+        """Will test case of Headings size 2"""
+
+        md = "## This is a heading size 2"
+
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            ("<div><h2>This is a heading size 2</h2></div>"
+             )
+        )
+
+    def test_headings_5(self):
+        """Will test case of Headings size 5"""
+
+        md = "##### This is a heading size 5"
+
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            ("<div><h5>This is a heading size 5</h5></div>"
+             )
+        )
+# TODO create tests for other block types

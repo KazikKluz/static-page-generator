@@ -8,12 +8,7 @@ class BlockType(Enum):
     """Only this type of blocks are allowed"""
 
     PARAGRAPH = "p"
-    H1 = "h1"
-    H2 = "h2"
-    H3 = "h3"
-    H4 = "h4"
-    H5 = "h5"
-    H6 = "h6"
+    HEADER = "h"
     CODE = "code"
     QUOTE = "blockquote"
     ULIST = "ul"
@@ -26,18 +21,8 @@ def block_to_block_type(block):
     tail = block.rsplit(" ", 1)[1].replace("\n", "")
 
     match lead:
-        case "#":
-            return BlockType.H1
-        case "##":
-            return BlockType.H2
-        case "###":
-            return BlockType.H3
-        case "####":
-            return BlockType.H4
-        case "#####":
-            return BlockType.H5
-        case "######":
-            return BlockType.H6
+        case "#" | "##" | "###" | "####" | "#####" | "######":
+            return BlockType.HEADER
         case "```":
             if tail == "```":
                 return BlockType.CODE

@@ -1,4 +1,7 @@
 class HTMLNode:
+    '''This class describes parent HTML node
+    and its expected behaviour'''
+
     def __init__(self, tag=None, value=None, children=None, props=None):
         self.tag = tag
         self.value = value
@@ -29,9 +32,6 @@ class LeafNode(HTMLNode):
             return self.value
 
         if self.props is None:
-
-            # print("hello")
-            # return f"<{self.tag}>{self.value}</{self.tag}>"
 
             if self.tag in ("img", "br"):
                 return f"<{self.tag}/>"
