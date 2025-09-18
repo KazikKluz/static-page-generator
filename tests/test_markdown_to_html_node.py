@@ -56,4 +56,42 @@ class TestMarkdownToHTMLNode(unittest.TestCase):
              "<li>This is ordered list third element</li></ol></div>")
         )
 
+    def test_unordered_list(self):
+        """Will test case of unordered list"""
+
+        md = """
+           - This is unordered list first element
+           - This is unordered list second element
+           - This is unordered list third element
+        """
+
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            ("<div><ul><li>This is unordered list first element</li>"
+             "<li>This is unordered list second element</li>"
+             "<li>This is unordered list third element</li></ul></div>"
+             )
+        )
+
+    def test_blockquote(self):
+        """ Will test case of blockquote"""
+
+        md = """
+            > This is a text within a blockquote
+            > and another line
+            > and the last one
+        """
+
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            ("<div><blockquote>This is a text within a blockquote<br/>"
+             "and another line<br/>"
+             "and the last one<br/></blockquote></div>"
+             )
+        )
+
     # TODO create tests for other block types

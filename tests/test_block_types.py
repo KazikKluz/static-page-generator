@@ -16,6 +16,7 @@ class TestingBlockTypes(unittest.TestCase):
         self.assertEqual(block_to_block_type(block), BlockType.H1)
 
     def test_h1(self):
+        """Checks non quality between H1 and H2"""
         self.assertNotEqual(block_to_block_type("## Hello "), BlockType.H1)
 
     def test_h2(self):

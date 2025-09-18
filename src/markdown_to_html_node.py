@@ -19,31 +19,49 @@ def markdown_to_html_node(doc):
     for block in blocks:
         block_type = block_to_block_type(block)
 
-        if block_type.value == "code":
-            clean_content = process_code_block(block)
-            leaf = LeafNode(None, clean_content)
-            inner = ParentNode(block_type.value, [leaf])
-            outer = ParentNode("pre", [inner])
+        match block_type.value:
+            case "code":
+                clean_content = process_code_block(block)
+                leaf = LeafNode(None, clean_content)
+                inner = ParentNode(block_type.value, [leaf])
+                outer = ParentNode("pre", [inner])
+                nodes.append(outer)
 
-            nodes.append(outer)
+            case "ol" | "ul":
+                children = process_list(block)
+                node = ParentNode(block_type.value, children)
+                nodes.append(node)
 
-        elif block_type.value == "ol" or block_type.value == "ul":
-            children = process_list(block)
-            print(f"children: {children}")
+            case "p":
+                children = text_to_children(block)
+                node = ParentNode(block_type.value, children)
+                nodes.append(node)
 
-            node = ParentNode(block_type.value, children)
+            case "blockquote":
+                content = process_blockquote(block)
+                leaf = LeafNode("br", "")
 
-            nodes.append(node)
-        else:
-            children = text_to_children(block)
-
-            node = ParentNode(block_type.value, children)
-
-            nodes.append(node)
+                print(f"leaf: {leaf.to_html()}")
+                node = ParentNode(block_type.value, content)
+                nodes.append(node)
 
     parent = ParentNode("div", nodes)
 
     return parent
+
+
+def process_blockquote(text):
+    """It takes a Markdown blockquote
+    and converts it into HTML blockquote"""
+    splited_text = text.split("\n")
+    children = []
+
+    for item in splited_text:
+        new_item = item.strip().split(" ", 1)[1]
+        children.append(LeafNode(None, new_item))
+        children.append(LeafNode("br", ""))
+
+    return children
 
 
 def process_list(text):
