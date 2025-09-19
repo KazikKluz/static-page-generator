@@ -5,28 +5,29 @@ import os
 import shutil
 
 
+SRC = "./static"
+DEST = "./public"
+
+
 def main():
     """Main function that executes the entire application"""
 
-    if not os.path.exists("./static"):
+    if not os.path.exists(SRC):
         raise FileNotFoundError("The ./static path does not exists")
 
-    if os.path.exists("./public"):
-        shutil.rmtree("./public")
+    if os.path.exists(DEST):
+        shutil.rmtree(DEST)
 
-    os.mkdir("./public")
+    os.mkdir(DEST)
 
-    src = "./static"
-    dest = "./public"
-
-    copy_static(src, dest)
+    copy_static(SRC, DEST)
 
 
-def copy_static(src, dest):
+def copy_static(source, destination):
     """ recursively copies static files into public directory"""
 
-    current_src = src
-    current_dest = dest
+    current_src = source
+    current_dest = destination
     content = os.listdir(current_src)
 
     for item in content:
@@ -36,5 +37,6 @@ def copy_static(src, dest):
         else:
             os.mkdir(f"{current_dest}/{item}")
             copy_static(f"{current_src}/{item}", f"{current_dest}/{item}")
+
 
 main()
