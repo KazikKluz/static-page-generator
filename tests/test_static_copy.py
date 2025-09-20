@@ -1,6 +1,7 @@
+"""Test Module for copy_static function"""
+
 import unittest
 import os
-import shutil
 
 from pyfakefs.fake_filesystem_unittest import TestCase
 from src.main import copy_static
@@ -34,7 +35,7 @@ class TestCopyStatic(TestCase):
         self.assertTrue(os.path.exists("/public/dir1/file1.txt"))
         self.assertTrue(os.path.exists("/public/dir1/file2.txt"))
 
-    def text_copy_nested_directories(self):
+    def test_copy_nested_directories(self):
         """Will test copying nested directories"""
         self.fs.create_file("/static/dir1/subdir1/file1.txt")
         self.fs.create_file("/static/dir1/file2.txt")

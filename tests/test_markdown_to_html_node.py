@@ -6,7 +6,7 @@ from src.markdown_to_html_node import markdown_to_html_node
 
 
 class TestMarkdownToHTMLNode(unittest.TestCase):
-    """Will contain all cases from testing the module"""
+    """\nWill contain all cases from testing the module\n"""
 
     def test_paragraphs(self):
         md = """
